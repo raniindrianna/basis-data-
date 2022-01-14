@@ -1,0 +1,285 @@
+create table MEMBERS 
+(
+   ID_MEMBER            INTEGER              not null,
+   ID_PACKAGE           INTEGER              not null,
+   USERNAME             VARCHAR2(100)        not null,
+   EMAIL                VARCHAR2(50)         not null,
+   PASSWORD             VARCHAR2(50)         not null,
+   PHONE_NUMBER         VARCHAR2(15)         not null,
+   BIRTH                DATE                 not null,
+   GENDER_MEMBER        CHAR(1)              not null,
+   STATUS               SMALLINT             not null,
+   DEVICE               VARCHAR2(20)         not null,
+   constraint PK_MEMBERS primary key (ID_MEMBER)
+);
+
+INSERT INTO members VALUES (1,1,'salsabila','salsa@gmail.com','salsa123','089647352748','06-JUN-03','F',1,'HP');
+INSERT INTO members VALUES (2,2,'rani','ranirani@gmail.com','ranni','086372837465','03-MAY-02','F',1,'TV');
+INSERT INTO members VALUES (3,3,'sarahw','sarahw@gmail.com','sasarah','087847563827','02-JAN-01','F',1,'HP');
+
+SELECT * FROM members;
+
+/*==============================================================*/
+/* Table: PAYMENTS                                              */
+/*==============================================================*/
+create table PAYMENTS 
+(
+   ID_PAYMENT           INTEGER              not null,
+   ID_PACKAGE           INTEGER              not null,
+   PAYMENT_TYPE         CHAR(1)              not null,
+   constraint PK_PAYMENTS primary key (ID_PAYMENT)
+);
+
+INSERT INTO payments VALUES (1,1,'d');
+INSERT INTO payments VALUES (2,2,'s');
+INSERT INTO payments VALUES (3,3,'o');
+
+SELECT * FROM payments;
+
+/*==============================================================*/
+/* Table: PACKAGES                                              */
+/*==============================================================*/
+create table PACKAGES 
+(
+   ID_PACKAGE           INTEGER              not null,
+   ID_PAYMENT           INTEGER,
+   CATEGORY_PACKAGE     VARCHAR2(20)         not null,
+   DURATION_PACKAGE     INTEGER              not null,
+   PRICE                NUMBER               not null,
+   START_DATE           DATE,
+   constraint PK_PACKAGES primary key (ID_PACKAGE)
+);
+
+INSERT INTO packages VALUES (1,1,'Mobile',30,54000,'31-DEC-21');
+INSERT INTO packages VALUES (2,2,'Standard',30,153000,'6-NOV-21');
+INSERT INTO packages VALUES (3,3,'Mobile',30,54000,'25-DEC-21');
+
+SELECT * FROM packages;
+
+/*==============================================================*/
+/* Table: MOVIES                                                */
+/*==============================================================*/
+create table MOVIES 
+(
+   ID_MOVIE             INTEGER              not null,
+   ID_DIRECTOR          INTEGER              not null,
+   TITLE                VARCHAR2(100)        not null,
+   RELEASE_YEAR         INTEGER              not null,
+   DURATION             NUMBER,
+   RATING               FLOAT                not null,
+   MINIMUM_AGE          VARCHAR2(10)         not null,
+   COUNTRY              VARCHAR2(100),
+   DESCRIPTION          VARCHAR2(3999),
+   COVER                BLOB,
+   constraint PK_MOVIES primary key (ID_MOVIE)
+);
+
+drop table movies;
+
+INSERT INTO movies (id_movie, id_director, title, release_year, duration, rating, minimum_age, country, description) VALUES (1,1,'Red Notice',2021,117, 6.4, '13+', 'US','An FBI profiler pursuing the worlds most wanted art thief becomes his reluctant partner in crime to catch an exclusive crook whos always one step ahead');
+INSERT INTO movies (id_movie, id_director, title, release_year, duration, rating, minimum_age, country, description) VALUES (2,2,'Train To Busan',2016,117, 7.6, '18+','Korea','As a zombie outbreak sweeps the country, a dad and his daughter take a harrowing train journey in an attempt to reach the only city thats still safe');
+INSERT INTO movies (id_movie, id_director, title, release_year, duration, rating, minimum_age, country, description) VALUES (3,3,'Imperfect',2019,112, 7.9, '13+','Indonesia','As a cosmetics company employee deals with insecurities about her body image, she considers a transformation for a chance at a promotion');
+INSERT INTO movies (id_movie, id_director, title, release_year, duration, rating, minimum_age, country, description) VALUES (4,4,'Susah Sinyal',2017,110, 7.1, '7+','Indonesia','A successful lawyer attempts to connect with her teen daughter on an island vacation, where the phone signal is weak and the tension is strong.');
+
+SELECT * FROM movies;
+
+/*==============================================================*/
+/* Table: DIRECTORS                                             */
+/*==============================================================*/
+create table DIRECTORS 
+(
+   ID_DIRECTOR          INTEGER              not null,
+   FNAME_DIR            VARCHAR2(25)         not null,
+   LNAME_DIR            VARCHAR2(25)         not null,
+   BIRTH_DIR            DATE,
+   GENDER_DIR           CHAR(1)              not null,
+   constraint PK_DIRECTORS primary key (ID_DIRECTOR)
+);
+
+INSERT INTO directors VALUES (1,'Rawson','Thurber','9-FEB-75','M');
+INSERT INTO directors VALUES (2,'Yeon','Sangho','1-JAN-78','M');
+INSERT INTO directors VALUES (3,'Ernest','Prakasa','29-JAN-92','M');
+
+SELECT * FROM directors;
+
+/*==============================================================*/
+/* Table: MOVIES_GENRE                                          */
+/*==============================================================*/
+create table MOVIES_GENRE 
+(
+   ID_GENRE             INTEGER              not null,
+   GENRE_NAME           VARCHAR2(20)         not null,
+   constraint PK_MOVIES_GENRE primary key (ID_GENRE)
+);
+
+INSERT INTO movies_genre VALUES (1,'Action');
+INSERT INTO movies_genre VALUES (2,'Adventure');
+INSERT INTO movies_genre VALUES (3,'Romance');
+INSERT INTO movies_genre VALUES (4,'Comedies');
+
+SELECT * FROM movies_genre;
+
+/*==============================================================*/
+/* Table: MOVIES_FORMAT                                         */
+/*==============================================================*/
+create table MOVIES_FORMAT 
+(
+   ID_FORMAT            INTEGER              not null,
+   ID_MOVIE             INTEGER              not null,
+   RESOLUTION           NUMBER               not null,
+   constraint PK_MOVIES_FORMAT primary key (ID_FORMAT)
+);
+
+INSERT INTO movies_format VALUES (1,1,480);
+INSERT INTO movies_format VALUES (2,2,1080);
+INSERT INTO movies_format VALUES (3,3,1080);
+INSERT INTO movies_format VALUES (4,4,480);
+
+SELECT * FROM movies_format;
+
+/*==============================================================*/
+/* Table: CASTS                                                 */
+/*==============================================================*/
+create table CASTS 
+(
+   ID_CAST              INTEGER              not null,
+   FNAME_CAST           VARCHAR2(25)         not null,
+   LNAME_CAST           VARCHAR2(25)         not null,
+   BIRTH_CAST           DATE,
+   GENDER_CAST          CHAR(1)              not null,
+   PICTURE              BLOB,
+   constraint PK_CASTS primary key (ID_CAST)
+);
+
+INSERT INTO casts(id_cast, fname_cast, lname_cast, birth_cast, gender_cast) VALUES (1,'Dwayne','Johnson','02-MAY-72','M');
+INSERT INTO casts(id_cast, fname_cast, lname_cast, birth_cast, gender_cast) VALUES (2,'Gal','Gadot','30-APR-85','F');
+INSERT INTO casts(id_cast, fname_cast, lname_cast, birth_cast, gender_cast) VALUES (3,'Gong','Yoo','10-JUL-79','M');
+INSERT INTO casts(id_cast, fname_cast, lname_cast, birth_cast, gender_cast) VALUES (4,'Jessica','Mila','03-AUG-92','F');
+INSERT INTO casts(id_cast, fname_cast, lname_cast, birth_cast, gender_cast) VALUES (5,'Adinia','Wirasti','19-JAN-87','F');
+
+SELECT * FROM casts;
+
+/*==============================================================*/
+/* Table: SUBTITLES                                             */
+/*==============================================================*/
+create table SUBTITLES 
+(
+   ID_SUBTITLE          INTEGER              not null,
+   ID_MOVIE             INTEGER              not null,
+   LANGUAGE             VARCHAR2(255)        not null,
+   TEXT                 CLOB                 not null,
+   constraint PK_SUBTITLES primary key (ID_SUBTITLE)
+);
+
+INSERT INTO subtitles VALUES (1,1,'Indonesian','Meski banyak yang mengetahui kisah cinta tragis antony dan cleopatra, jenderal Romawi pembangkang yang jatuh cita dengan ratu Mesir yang memesona, keduanya bunuh diri.');
+INSERT INTO subtitles VALUES (2,2,'English','May I have your attention? We apologize for the inconvenience. Our train will conclude service at Daejeon station. Military is deployed there, and will secure our train.');
+INSERT INTO subtitles VALUES (3,2,'Indonesian','Di sana ada pasukan militer dan mereka akan mengamankan kereta kita, jadi, begitu kita tiba, mohon untuk keluar dari kereta. Aku ulangi lagi, stasiun Daejeon adalah pemberhentian terakhir kita.');
+INSERT INTO subtitles VALUES (4,3,'English','After eight exciting years. Together with Malathi. I have to say. That today is my last day here. Isnt that right, Kelvin?');
+INSERT INTO subtitles VALUES (5,4,'Indonesian','Makanya lo kalau liburan jangan ke Makau terus. Yang Penting Menang! El, serius deh. Kalau lo mau pergi, pergi aja!');
+
+
+SELECT * FROM subtitles;
+
+/*==============================================================*/
+/* Table: HAVE                                                  */
+/*==============================================================*/
+create table HAVE 
+(
+   ID_MOVIE             INTEGER              not null,
+   ID_CAST              INTEGER              not null,
+   constraint PK_HAVE primary key (ID_MOVIE, ID_CAST)
+);
+
+INSERT INTO have VALUES (1,1);
+INSERT INTO have VALUES (1,2);
+INSERT INTO have VALUES (2,3);
+INSERT INTO have VALUES (3,4);
+INSERT INTO have VALUES (4,5);
+
+SELECT * FROM have;
+
+/*==============================================================*/
+/* Table: INCLUDE                                               */
+/*==============================================================*/
+create table INCLUDE 
+(
+   ID_MOVIE             INTEGER              not null,
+   ID_GENRE             INTEGER              not null,
+   constraint PK_INCLUDE primary key (ID_MOVIE, ID_GENRE)
+);
+
+INSERT INTO include VALUES (1,1);
+INSERT INTO include VALUES (1,2);
+INSERT INTO include VALUES (2,2);
+INSERT INTO include VALUES (2,1);
+INSERT INTO include VALUES (3,3);
+INSERT INTO include VALUES (4,4);
+
+SELECT * FROM include;
+
+/*==============================================================*/
+/* Table: WATCH                                                 */
+/*==============================================================*/
+create table WATCH 
+(
+   ID_MEMBER            INTEGER              not null,
+   ID_MOVIE             INTEGER              not null,
+   constraint PK_WATCH primary key (ID_MEMBER, ID_MOVIE)
+);
+
+INSERT INTO watch VALUES (1,1);
+INSERT INTO watch VALUES (2,2);
+INSERT INTO watch VALUES (3,3);
+
+SELECT * FROM watch;
+
+
+/*==============================================================*/
+/* Table: VIEW most movie                                       */
+/*==============================================================*/
+
+
+
+SELECT email, password FROM members WHERE id_member = 1;
+
+SELECT * FROM members WHERE username = 'sarahw' AND password = 'sasarah';
+
+SELECT * from packages;
+
+SELECT category_package, price FROM packages WHERE price > 150000 ;
+
+SELECT * FROM payments; 
+
+SELECT payment_type FROM payments WHERE id_payment = 3;
+
+SELECT * FROM movies;
+
+SELECT title, release_year, rating FROM movies WHERE rating > 7.0;
+
+SELECT * FROM movies;
+
+SELECT a.title, c.genre_name FROM movies a 
+    INNER JOIN include b ON a.id_movie = b.id_movie
+    INNER JOIN movies_genre c ON b.id_genre=c.id_genre;
+
+SELECT a.title, b.resolution FROM movies a 
+    INNER JOIN movies_format b ON a.id_movie = b.id_movie;
+
+SELECT a.title FROM movies a 
+    INNER JOIN have b ON a.id_movie = b.id_movie
+    INNER JOIN casts c ON b.id_cast = c.id_cast
+    WHERE c.fname_cast = 'Gal';
+    
+/*==============================================================*/
+/* Index: HAVE_FK                                               */
+/*==============================================================*/
+create index HAVE_FK on HAVE (
+   ID_MOVIE ASC
+);
+
+CREATE index p
+
+
+
+
+
